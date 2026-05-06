@@ -64,11 +64,11 @@ main {
     column-gap: 3.21vw;
     grid-template-columns: 22.49vw 22.49vw 29.52vw;
     grid-template-rows: 4vw 5.21vw 9.03vw 9.03vw;
-    grid-template-areas: 
-    "text . ."
-    "fc sc tc"
-    "fi si bb"
-    ". . sb";
+    grid-template-areas:
+        "text . ."
+        "fc sc tc"
+        "fi si bb"
+        ". . sb";
     /* GAPLARA DUZELIS */
 }
 
@@ -105,28 +105,33 @@ main h1 {
     height: 2.6vw;
     text-align: center;
     border: 0.1vw solid #E5E5E5;
+    border-left: none;
+    cursor: pointer;
+    outline: none;
 }
 
 .currencies button:first-child {
+    border-left: 0.1vw solid #E5E5E5;
     border-top-left-radius: 0.25vw;
     border-bottom-left-radius: 0.25vw;
 }
 
-.currencies button:nth-child(2) {
-    border-left: none;
+.currencies button.active {
+    color: white !important;
+    background-color: #833AE0 !important;
+    border: none !important;
 }
 
-.currencies button:nth-child(3) {
-    border-left: none;
+.currencies button.active+button {
+    border-left: 0.1vw solid #E5E5E5 !important;
 }
 
 .currencies button:last-child {
-    border-left: none;
     border-top-right-radius: 0.25vw;
     border-bottom-right-radius: 0.25vw;
 }
 
-.input{
+.input {
     border: 0.1vw solid #E5E5E5;
     border-radius: 0.25vw;
     font-size: 3.13vw;
@@ -135,11 +140,11 @@ main h1 {
     padding-bottom: 3.2vw;
 }
 
-.box{
+.box {
     display: flex;
 }
 
-.process{
+.process {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -152,7 +157,7 @@ main h1 {
     paint-order: stroke fill;
 }
 
-.answer{
+.answer {
     width: 22.4vw;
     border: 0.1vw solid #E5E5E5;
     border-left: none;
@@ -161,30 +166,30 @@ main h1 {
     color: black;
 }
 
-.first-change{
+.first-change {
     grid-area: fc;
 }
 
-.second-change{
+.second-change {
     grid-area: sc;
 }
 
-.third-change{
+.third-change {
     grid-area: tc;
 }
 
-.first-input{
+.first-input {
     grid-area: fi;
 }
 
-.second-input{
+.second-input {
     grid-area: si;
 }
 
-.buy-box{
+.buy-box {
     grid-area: bb;
 }
 
-.sell-box{
+.sell-box {
     grid-area: sb;
 }
