@@ -35,6 +35,7 @@ header h3 {
     align-content: center;
     border-radius: 0.35vw;
     font-weight: 490;
+    font-size: 0.95vw;
 }
 
 .part-of-header {
@@ -65,9 +66,10 @@ main {
     grid-template-rows: 4vw 5.21vw 9.03vw 9.03vw;
     grid-template-areas: 
     "text . ."
-    "fc sc ."
-    "fi si ."
-    ". . .";
+    "fc sc tc"
+    "fi si bb"
+    ". . sb";
+    /* GAPLARA DUZELIS */
 }
 
 main h1 {
@@ -102,7 +104,7 @@ main h1 {
     width: 5.6vw;
     height: 2.6vw;
     text-align: center;
-    border: 1px solid #E5E5E5;
+    border: 0.1vw solid #E5E5E5;
 }
 
 .currencies button:first-child {
@@ -125,12 +127,38 @@ main h1 {
 }
 
 .input{
-    border: 1px solid #E5E5E5;
+    border: 0.1vw solid #E5E5E5;
     border-radius: 0.25vw;
     font-size: 3.13vw;
     font-weight: bold;
     padding-left: 1.22vw;
     padding-bottom: 3.2vw;
+}
+
+.box{
+    display: flex;
+}
+
+.process{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 7.12vw;
+    color: #833AE0;
+    background-color: #833AE0;
+    border-radius: 0.25vw;
+    font-size: 1.74vw;
+    -webkit-text-stroke: 0.16vw white;
+    paint-order: stroke fill;
+}
+
+.answer{
+    width: 22.4vw;
+    border: 0.1vw solid #E5E5E5;
+    border-left: none;
+    border-radius: 0.25vw;
+    font-size: 3.13vw;
+    color: black;
 }
 
 .first-change{
@@ -141,10 +169,22 @@ main h1 {
     grid-area: sc;
 }
 
+.third-change{
+    grid-area: tc;
+}
+
 .first-input{
     grid-area: fi;
 }
 
 .second-input{
     grid-area: si;
+}
+
+.buy-box{
+    grid-area: bb;
+}
+
+.sell-box{
+    grid-area: sb;
 }
