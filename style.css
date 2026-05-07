@@ -60,16 +60,15 @@ main {
     display: grid;
     justify-content: center;
     margin-top: 5.5vw;
-    row-gap: 1.91vw;
-    column-gap: 3.21vw;
-    grid-template-columns: 22.49vw 22.49vw 29.52vw;
-    grid-template-rows: 4vw 5.21vw 9.03vw 9.03vw;
+    row-gap: 1.85vw;
+    column-gap: 3.2vw;
+    grid-template-columns: 22.49vw 22.49vw 31.72vw;
+    grid-template-rows: 4vw 5.21vw 9.03vw 9.83vw;
     grid-template-areas:
         "text . ."
         "fc sc tc"
         "fi si bb"
         ". . sb";
-    /* GAPLARA DUZELIS */
 }
 
 main h1 {
@@ -105,6 +104,7 @@ main h1 {
     height: 2.6vw;
     text-align: center;
     border: 0.1vw solid #E5E5E5;
+    font-size: 1.04vw;
     border-left: none;
     cursor: pointer;
     outline: none;
@@ -120,6 +120,7 @@ main h1 {
     color: white !important;
     background-color: #833AE0 !important;
     border: none !important;
+    font-weight: 350;
 }
 
 .currencies button.active+button {
@@ -142,6 +143,7 @@ main h1 {
 
 .box {
     display: flex;
+    margin-left: 2vw;
 }
 
 .process {
@@ -178,6 +180,7 @@ main h1 {
 }
 
 .third-change {
+    margin-left: 2.2vw;
     grid-area: tc;
 }
 
@@ -190,9 +193,11 @@ main h1 {
 }
 
 .buy-box {
+    margin-bottom: 0.2vw;
     grid-area: bb;
 }
 
 .sell-box {
+    margin-top: 1vw;
     grid-area: sb;
 }
