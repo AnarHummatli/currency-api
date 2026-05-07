@@ -163,6 +163,9 @@ main h1 {
     border-left: none;
     border-radius: 0.25vw;
     font-size: 3.13vw;
+    font-weight: bold;
+    padding-left: 2.1vw;
+    padding-top: 0.58vw;
     color: black;
 }
 
