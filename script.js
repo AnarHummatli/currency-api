@@ -3,6 +3,8 @@ let firstInput = document.querySelector(".first-input");
 let secondInput = document.querySelector(".second-input");
 let buyText = document.querySelector(".buy-text");
 let sellText = document.querySelector(".sell-text");
+let firstExcInfo = document.querySelector(".first-exchange-info");
+let secondExcInfo = document.querySelector(".second-exchange-info");
 
 let base = 'RUB';
 let symbols = 'USD';
@@ -57,6 +59,7 @@ function updateRates() {
         .then((data) => {
             currentCoefficient = data.response.rates[symbols];
             calculateFromFirst();
+            changeText(base,symbols);
         });
 }
 
@@ -115,6 +118,12 @@ function calculateBank(bank) {
         buyText.innerText = (val * 1.005).toFixed(4);
         sellText.innerText = (val * 0.995).toFixed(4);
     }
+}
+
+function changeText(base, symbols){
+    firstExcInfo.innerText = `1 ${base} = ${currentCoefficient.toFixed(4)} ${symbols}`;
+    let newCoefficient = 1/currentCoefficient;
+    secondExcInfo.innerText = `1 ${symbols} = ${newCoefficient.toFixed(4)} ${base}`;
 }
 
 

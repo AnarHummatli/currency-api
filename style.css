@@ -68,7 +68,7 @@ main {
         "text . ."
         "fc sc tc"
         "fi si bb"
-        ". . sb";
+        "fei sei sb";
 }
 
 main h1 {
@@ -137,8 +137,8 @@ main h1 {
     border-radius: 0.25vw;
     font-size: 3.13vw;
     font-weight: bold;
-    padding-left: 1.22vw;
-    padding-bottom: 3.2vw;
+    padding-left: 1.1vw;
+    padding-bottom: 3.4vw;
 }
 
 .box {
@@ -170,6 +170,13 @@ main h1 {
     padding-right: 1.2vw;
     padding-top: 0.58vw;
     color: black;
+}
+
+.exchange-info{
+    font-size: 1.04vw;
+    color: #C6C6C6;
+    margin-top: -4.1vw;
+    margin-left: 1.26vw;
 }
 
 .input,
@@ -209,4 +216,12 @@ main h1 {
 .sell-box {
     margin-top: 1vw;
     grid-area: sb;
+}
+
+.first-exchange-info{
+    grid-area: fei;
+}
+
+.second-exchange-info{
+    grid-area: sei;
 }
