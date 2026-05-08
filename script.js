@@ -51,7 +51,27 @@ function calculateBank(bank) {
     }
 }
 
-firstInput.addEventListener('input', calculateResult);
+
+
+firstInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(',', '.');
+
+    if (Number(value) > 10000) {
+        value = "10000";
+    }
+    if (value.includes('.')) {
+        let parts = value.split('.');
+
+        if (parts[1].length > 4) {
+            parts[1] = parts[1].slice(0, 4);
+        }
+
+        value = parts.join('.');
+    }
+
+    e.target.value = value;
+    calculateResult();
+});
 
 
 

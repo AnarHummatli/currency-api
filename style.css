@@ -12,14 +12,14 @@ body {
 }
 
 #logo {
-    height: 3.29vh;
+    height: 2vw;
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    height: 7.14vh;
+    height: 4.34vw;
     width: 100%;
     gap: 7.8vw;
     background-color: #F5F5F6;
@@ -167,8 +167,17 @@ main h1 {
     font-size: 3.13vw;
     font-weight: bold;
     padding-left: 2.1vw;
+    padding-right: 1.2vw;
     padding-top: 0.58vw;
     color: black;
+}
+
+.input,
+.answer {
+    white-space: nowrap;
+    overflow-x: scroll;
+    scrollbar-color: #C6C6C6 transparent;
+    scrollbar-width: thin;
 }
 
 .first-change {
