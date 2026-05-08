@@ -13,57 +13,8 @@ let selectedBank = "NEW";
 
 
 
-function updateRates() {
-    const url = `https://api.currencybeacon.com/v1/latest?api_key=${apiKey}&base=${base}&symbols=${symbols}`;
-
-    fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-            currentCoefficient = data.response.rates[symbols];
-            calculateResult();
-        })
-}
-
-function calculateResult() {
-    let amount = Number(firstInput.value);
-    if (!isNaN(amount)) {
-        
-        if (amount === 0) {
-            secondInput.value = "0";
-            buyText.innerText = "0";
-            sellText.innerText = "0";
-            return;
-        }
-
-        secondInput.value = (amount * currentCoefficient).toFixed(4);
-        calculateBank(selectedBank);
-    }
-}
-
-function calculateBank(bank) {
-    selectedBank = bank;
-    let val = Number(secondInput.value);
-
-    if (bank === "ABC") {
-        buyText.innerText = (val * 1.01).toFixed(4);
-        sellText.innerText = (val * 0.995).toFixed(4);
-    } else if (bank === "NEW") {
-        buyText.innerText = (val * 1.02).toFixed(4);
-        sellText.innerText = (val * 0.99).toFixed(4);
-    } else if (bank === "AME") {
-        buyText.innerText = (val * 1.015).toFixed(4);
-        sellText.innerText = (val * 0.985).toFixed(4);
-    } else if (bank === "RED") {
-        buyText.innerText = (val * 1.005).toFixed(4);
-        sellText.innerText = (val * 0.995).toFixed(4);
-    }
-}
-
-
-
-firstInput.addEventListener('input', (e) => {
-
-    let value = e.target.value.replace(',', '.');
+function formatInput(value) {
+    value = value.replace(',', '.');
 
     if (value === '.') {
         value = '0.';
@@ -84,7 +35,7 @@ firstInput.addEventListener('input', (e) => {
         parts = value.split('.');
     }
 
-    if (parts.length == 2) {
+    if (parts.length === 2) {
         if (parts[1].length > 4) {
             parts[1] = parts[1].slice(0, 4);
         }
@@ -95,15 +46,98 @@ firstInput.addEventListener('input', (e) => {
         value = "10000";
     }
 
+    return value;
+}
+
+function updateRates() {
+    const url = `https://api.currencybeacon.com/v1/latest?api_key=${apiKey}&base=${base}&symbols=${symbols}`;
+
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+            currentCoefficient = data.response.rates[symbols];
+            calculateFromFirst();
+        });
+}
+
+function calculateFromFirst() {
+    let amount = Number(firstInput.value);
+
+    if (!isNaN(amount)) {
+
+        if (amount === 0) {
+            secondInput.value = "0";
+            buyText.innerText = "0";
+            sellText.innerText = "0";
+            return;
+        }
+
+        secondInput.value = (amount * currentCoefficient).toFixed(4);
+        calculateBank(selectedBank);
+    }
+}
+
+function calculateFromSecond() {
+    let amount = Number(secondInput.value);
+
+    if (!isNaN(amount)) {
+
+        if (amount === 0) {
+            firstInput.value = "0";
+            buyText.innerText = "0";
+            sellText.innerText = "0";
+            return;
+        }
+
+        firstInput.value = (amount / currentCoefficient).toFixed(4);
+        calculateBank(selectedBank);
+    }
+}
+
+function calculateBank(bank) {
+    selectedBank = bank;
+
+    let val = Number(secondInput.value);
+
+    if (bank === "ABC") {
+        buyText.innerText = (val * 1.01).toFixed(4);
+        sellText.innerText = (val * 0.995).toFixed(4);
+    } 
+    else if (bank === "NEW") {
+        buyText.innerText = (val * 1.02).toFixed(4);
+        sellText.innerText = (val * 0.99).toFixed(4);
+    } 
+    else if (bank === "AME") {
+        buyText.innerText = (val * 1.015).toFixed(4);
+        sellText.innerText = (val * 0.985).toFixed(4);
+    } 
+    else if (bank === "RED") {
+        buyText.innerText = (val * 1.005).toFixed(4);
+        sellText.innerText = (val * 0.995).toFixed(4);
+    }
+}
+
+
+
+firstInput.addEventListener('input', (e) => {
+    let value = formatInput(e.target.value);
+
     e.target.value = value;
 
-    calculateResult();
+    calculateFromFirst();
 });
 
+secondInput.addEventListener('input', (e) => {
+    let value = formatInput(e.target.value);
 
+    e.target.value = value;
+
+    calculateFromSecond();
+});
 
 allButtons.forEach((btn) => {
     btn.addEventListener('click', (e) => {
+
         let clickedButton = e.target;
         let parentContainer = clickedButton.closest(".currencies");
         let currentActive = parentContainer.querySelector(".active");
@@ -117,10 +151,12 @@ allButtons.forEach((btn) => {
         if (parentDiv.classList.contains("first-change")) {
             base = clickedButton.innerText;
             updateRates();
-        } else if (parentDiv.classList.contains("second-change")) {
+        } 
+        else if (parentDiv.classList.contains("second-change")) {
             symbols = clickedButton.innerText;
             updateRates();
-        } else if (parentDiv.classList.contains("third-change")) {
+        } 
+        else if (parentDiv.classList.contains("third-change")) {
             calculateBank(clickedButton.innerText);
         }
     });
