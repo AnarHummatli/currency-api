@@ -27,6 +27,14 @@ function updateRates() {
 function calculateResult() {
     let amount = Number(firstInput.value);
     if (!isNaN(amount)) {
+        
+        if (amount === 0) {
+            secondInput.value = "0";
+            buyText.innerText = "0";
+            sellText.innerText = "0";
+            return;
+        }
+
         secondInput.value = (amount * currentCoefficient).toFixed(4);
         calculateBank(selectedBank);
     }
@@ -54,22 +62,41 @@ function calculateBank(bank) {
 
 
 firstInput.addEventListener('input', (e) => {
+
     let value = e.target.value.replace(',', '.');
+
+    if (value === '.') {
+        value = '0.';
+    }
+
+    if (value === '') {
+        value = '0';
+    }
+
+    if (value.length > 1 && value[0] === '0' && value[1] !== '.') {
+        value = value.slice(1);
+    }
+
+    let parts = value.split('.');
+
+    if (parts.length > 2) {
+        value = parts[0] + '.' + parts.slice(1).join('');
+        parts = value.split('.');
+    }
+
+    if (parts.length == 2) {
+        if (parts[1].length > 4) {
+            parts[1] = parts[1].slice(0, 4);
+        }
+        value = parts.join('.');
+    }
 
     if (Number(value) > 10000) {
         value = "10000";
     }
-    if (value.includes('.')) {
-        let parts = value.split('.');
-
-        if (parts[1].length > 4) {
-            parts[1] = parts[1].slice(0, 4);
-        }
-
-        value = parts.join('.');
-    }
 
     e.target.value = value;
+
     calculateResult();
 });
 
