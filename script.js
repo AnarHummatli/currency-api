@@ -15,6 +15,14 @@ let selectedBank = "NEW";
 
 
 
+function formatNumber(num) {
+    return parseFloat(num.toFixed(4));
+}
+
+function allowOnlyNumbers(value) {
+    return value.replace(/[^0-9.]/g, '');
+}
+
 function formatInput(value) {
     value = value.replace(',', '.');
 
@@ -55,11 +63,11 @@ function updateRates() {
     const url = `https://api.currencybeacon.com/v1/latest?api_key=${apiKey}&base=${base}&symbols=${symbols}`;
 
     fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
             currentCoefficient = data.response.rates[symbols];
             calculateFromFirst();
-            changeText(base,symbols);
+            changeText(base, symbols);
         });
 }
 
@@ -75,7 +83,7 @@ function calculateFromFirst() {
             return;
         }
 
-        secondInput.value = (amount * currentCoefficient).toFixed(4);
+        secondInput.value = formatNumber(amount * currentCoefficient);
         calculateBank(selectedBank);
     }
 }
@@ -92,7 +100,7 @@ function calculateFromSecond() {
             return;
         }
 
-        firstInput.value = (amount / currentCoefficient).toFixed(4);
+        firstInput.value = formatNumber(amount / currentCoefficient);
         calculateBank(selectedBank);
     }
 }
@@ -103,44 +111,42 @@ function calculateBank(bank) {
     let val = Number(secondInput.value);
 
     if (bank === "ABC") {
-        buyText.innerText = (val * 1.01).toFixed(4);
-        sellText.innerText = (val * 0.995).toFixed(4);
+        buyText.innerText = formatNumber(val * 1.01);
+        sellText.innerText = formatNumber(val * 0.995);
     } 
     else if (bank === "NEW") {
-        buyText.innerText = (val * 1.02).toFixed(4);
-        sellText.innerText = (val * 0.99).toFixed(4);
+        buyText.innerText = formatNumber(val * 1.02);
+        sellText.innerText = formatNumber(val * 0.99);
     } 
     else if (bank === "AME") {
-        buyText.innerText = (val * 1.015).toFixed(4);
-        sellText.innerText = (val * 0.985).toFixed(4);
+        buyText.innerText = formatNumber(val * 1.015);
+        sellText.innerText = formatNumber(val * 0.985);
     } 
     else if (bank === "RED") {
-        buyText.innerText = (val * 1.005).toFixed(4);
-        sellText.innerText = (val * 0.995).toFixed(4);
+        buyText.innerText = formatNumber(val * 1.005);
+        sellText.innerText = formatNumber(val * 0.995);
     }
 }
 
-function changeText(base, symbols){
-    firstExcInfo.innerText = `1 ${base} = ${currentCoefficient.toFixed(4)} ${symbols}`;
-    let newCoefficient = 1/currentCoefficient;
-    secondExcInfo.innerText = `1 ${symbols} = ${newCoefficient.toFixed(4)} ${base}`;
+function changeText(base, symbols) {
+    firstExcInfo.innerText = `1 ${base} = ${formatNumber(currentCoefficient)} ${symbols}`;
+    let newCoefficient = 1 / currentCoefficient;
+    secondExcInfo.innerText = `1 ${symbols} = ${formatNumber(newCoefficient)} ${base}`;
 }
 
 
 
 firstInput.addEventListener('input', (e) => {
-    let value = formatInput(e.target.value);
-
+    let value = allowOnlyNumbers(e.target.value);
+    value = formatInput(value);
     e.target.value = value;
-
     calculateFromFirst();
 });
 
 secondInput.addEventListener('input', (e) => {
-    let value = formatInput(e.target.value);
-
+    let value = allowOnlyNumbers(e.target.value);
+    value = formatInput(value);
     e.target.value = value;
-
     calculateFromSecond();
 });
 
