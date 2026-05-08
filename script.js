@@ -60,6 +60,13 @@ function formatInput(value) {
 }
 
 function updateRates() {
+    if (base === symbols) {
+        currentCoefficient = 1;
+        calculateFromFirst();
+        changeText(base, symbols);
+        return;
+    }
+
     const url = `https://api.currencybeacon.com/v1/latest?api_key=${apiKey}&base=${base}&symbols=${symbols}`;
 
     fetch(url)
@@ -110,18 +117,24 @@ function calculateBank(bank) {
 
     let val = Number(secondInput.value);
 
+    if (base === symbols) {
+        buyText.innerText = formatNumber(val);
+        sellText.innerText = formatNumber(val);
+        return;
+    }
+
     if (bank === "ABC") {
         buyText.innerText = formatNumber(val * 1.01);
         sellText.innerText = formatNumber(val * 0.995);
-    } 
+    }
     else if (bank === "NEW") {
         buyText.innerText = formatNumber(val * 1.02);
         sellText.innerText = formatNumber(val * 0.99);
-    } 
+    }
     else if (bank === "AME") {
         buyText.innerText = formatNumber(val * 1.015);
         sellText.innerText = formatNumber(val * 0.985);
-    } 
+    }
     else if (bank === "RED") {
         buyText.innerText = formatNumber(val * 1.005);
         sellText.innerText = formatNumber(val * 0.995);
@@ -129,6 +142,12 @@ function calculateBank(bank) {
 }
 
 function changeText(base, symbols) {
+    if (base === symbols) {
+        firstExcInfo.innerText = `1 ${base} = 1 ${symbols}`;
+        secondExcInfo.innerText = `1 ${symbols} = 1 ${base}`;
+        return;
+    }
+    
     firstExcInfo.innerText = `1 ${base} = ${formatNumber(currentCoefficient)} ${symbols}`;
     let newCoefficient = 1 / currentCoefficient;
     secondExcInfo.innerText = `1 ${symbols} = ${formatNumber(newCoefficient)} ${base}`;
@@ -166,11 +185,11 @@ allButtons.forEach((btn) => {
         if (parentDiv.classList.contains("first-change")) {
             base = clickedButton.innerText;
             updateRates();
-        } 
+        }
         else if (parentDiv.classList.contains("second-change")) {
             symbols = clickedButton.innerText;
             updateRates();
-        } 
+        }
         else if (parentDiv.classList.contains("third-change")) {
             calculateBank(clickedButton.innerText);
         }
