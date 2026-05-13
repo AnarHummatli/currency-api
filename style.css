@@ -179,6 +179,13 @@ main h1 {
     margin-left: 1.26vw;
 }
 
+.problem{
+    font-size: 1.7vw;
+    color: rgba(255, 0, 0, 0.932);
+    margin-left: 9.6vw;
+    margin-top: -10.5vw;
+}
+
 .input,
 .answer {
     white-space: nowrap;

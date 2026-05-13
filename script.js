@@ -5,10 +5,11 @@ let buyText = document.querySelector(".buy-text");
 let sellText = document.querySelector(".sell-text");
 let firstExcInfo = document.querySelector(".first-exchange-info");
 let secondExcInfo = document.querySelector(".second-exchange-info");
+let problemText = document.querySelector(".problem");
 
 let base = 'RUB';
 let symbols = 'USD';
-const apiKey = "o4YTyJTSyZqQLfM7MPjUcbM4EBwsXR5s";
+const apiKey = "21fdb8a2ec151ee254c7cb20";
 
 let currentCoefficient = 1;
 let selectedBank = "NEW";
@@ -67,14 +68,40 @@ function updateRates() {
         return;
     }
 
-    const url = `https://api.currencybeacon.com/v1/latest?api_key=${apiKey}&base=${base}&symbols=${symbols}`;
+    const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${base}`;
+    let backupCoefficient = `${base}_${symbols}`;
+
 
     fetch(url)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Şəbəkə xətası");
+            }
+            return res.json();
+        })
         .then(data => {
-            currentCoefficient = data.response.rates[symbols];
+            problemText.innerText = "";
+            let rates = data.conversion_rates;
+            for (let key in rates) {
+                localStorage.setItem(`${base}_${key}`, rates[key]);
+                localStorage.setItem(`${key}_${base}`, 1 / rates[key]);
+            }
+            currentCoefficient = rates[symbols];
             calculateFromFirst();
             changeText(base, symbols);
+        })
+        .catch(error => {
+            let backupValue = localStorage.getItem(backupCoefficient);
+
+            if (backupValue) {
+                problemText.innerText = "Xəta: İnternet bağlantısı kəsildi. Proqram oflayn rejimdə işləyir.";
+                currentCoefficient = Number(backupValue);
+                calculateFromFirst();
+                changeText(base, symbols);
+            }
+            else {
+                problemText.innerText = "Xəta: Məlumat tapılmadı və internet bağlantısı yoxdur.";
+            }
         });
 }
 
@@ -147,7 +174,7 @@ function changeText(base, symbols) {
         secondExcInfo.innerText = `1 ${symbols} = 1 ${base}`;
         return;
     }
-    
+
     firstExcInfo.innerText = `1 ${base} = ${formatNumber(currentCoefficient)} ${symbols}`;
     let newCoefficient = 1 / currentCoefficient;
     secondExcInfo.innerText = `1 ${symbols} = ${formatNumber(newCoefficient)} ${base}`;
@@ -194,6 +221,14 @@ allButtons.forEach((btn) => {
             calculateBank(clickedButton.innerText);
         }
     });
+});
+
+window.addEventListener('online', () => {
+    updateRates();
+});
+
+window.addEventListener('offline', () => {
+    problemText.innerText = "Xəta: İnternet bağlantısı kəsildi. Proqram oflayn rejimdə işləyir.";
 });
 
 updateRates();
