@@ -117,14 +117,14 @@ main h1 {
 }
 
 .currencies button.active {
-    color: white !important;
-    background-color: #833AE0 !important;
-    border: none !important;
+    color: white;
+    background-color: #833AE0;
+    border: none;
     font-weight: 350;
 }
 
 .currencies button.active+button {
-    border-left: 0.1vw solid #E5E5E5 !important;
+    border-left: 0.1vw solid #E5E5E5;
 }
 
 .currencies button:last-child {
