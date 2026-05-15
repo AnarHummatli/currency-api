@@ -13,6 +13,7 @@ const apiKey = "21fdb8a2ec151ee254c7cb20";
 
 let currentCoefficient = 1;
 let selectedBank = "NEW";
+let lastCalculatedValue = 0;
 
 
 
@@ -107,42 +108,37 @@ function updateRates() {
 
 function calculateFromFirst() {
     let amount = Number(firstInput.value);
-
     if (!isNaN(amount)) {
-
         if (amount === 0) {
             secondInput.value = "0";
-            buyText.innerText = "0";
-            sellText.innerText = "0";
+            lastCalculatedValue = 0;
+            calculateBank(selectedBank);
             return;
         }
-
         secondInput.value = formatNumber(amount * currentCoefficient);
+        lastCalculatedValue = secondInput.value;
         calculateBank(selectedBank);
     }
 }
 
 function calculateFromSecond() {
     let amount = Number(secondInput.value);
-
     if (!isNaN(amount)) {
-
         if (amount === 0) {
             firstInput.value = "0";
-            buyText.innerText = "0";
-            sellText.innerText = "0";
+            lastCalculatedValue = 0;
+            calculateBank(selectedBank);
             return;
         }
-
         firstInput.value = formatNumber(amount / currentCoefficient);
+        lastCalculatedValue = firstInput.value;
         calculateBank(selectedBank);
     }
 }
 
 function calculateBank(bank) {
     selectedBank = bank;
-
-    let val = Number(secondInput.value);
+    let val = Number(lastCalculatedValue);
 
     if (base === symbols) {
         buyText.innerText = formatNumber(val);
