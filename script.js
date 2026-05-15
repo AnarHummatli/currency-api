@@ -151,20 +151,20 @@ function calculateBank(bank) {
     }
 
     if (bank === "ABC") {
-        buyText.innerText = formatNumber(val * 1.01);
-        sellText.innerText = formatNumber(val * 0.995);
+        buyText.innerText = formatNumber(val * 0.99);
+        sellText.innerText = formatNumber(val * 1.005);
     }
     else if (bank === "NEW") {
-        buyText.innerText = formatNumber(val * 1.02);
-        sellText.innerText = formatNumber(val * 0.99);
+        buyText.innerText = formatNumber(val * 0.98);
+        sellText.innerText = formatNumber(val * 1.01);
     }
     else if (bank === "AME") {
-        buyText.innerText = formatNumber(val * 1.015);
-        sellText.innerText = formatNumber(val * 0.985);
+        buyText.innerText = formatNumber(val * 0.985);
+        sellText.innerText = formatNumber(val * 1.015);
     }
     else if (bank === "RED") {
-        buyText.innerText = formatNumber(val * 1.005);
-        sellText.innerText = formatNumber(val * 0.995);
+        buyText.innerText = formatNumber(val * 0.995);
+        sellText.innerText = formatNumber(val * 1.005);
     }
 }
 
